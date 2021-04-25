@@ -1,5 +1,6 @@
 import {GetStaticProps} from 'next';
 import {format, parseISO} from 'date-fns';
+import Link from 'next/link';
 import Image from 'next/image';
 import ptBR from 'date-fns/locale/pt-BR';
 import { api } from '../services/api';
@@ -15,7 +16,6 @@ type Episode = {
     members:string;
     publishedAt: string;
     thumbnail:string;
-    description:string;
     url:string;
     type: string;
     duration: number; 
@@ -39,7 +39,9 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps) {
                 <Image width={192} height={192} objectFit="cover" src={episode.thumbnail} alt={episode.title}/>
                 
                 <div className={styles.episodesDetails}> 
-                  <a href="">{episode.title}</a>
+                  <Link href={`/episodes/${episode.id}`}>
+                    <a>{episode.title}</a>
+                  </Link>
                   <p>{episode.members}</p>
                   <span>{episode.publishedAt} </span>
                   <span>{episode.durationString}</span>
@@ -71,7 +73,11 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps) {
                   <td style={{width:95, height:0}} >
                     <Image width={120} height={120} src={episode.thumbnail} alt={episode.title} objectFit="cover" />
                   </td>
-                  <td><a href="">{episode.title}</a></td>
+                  <td>
+                    <Link href={`/episodes/${episode.id}`}>
+                      <a>{episode.title}</a>
+                    </Link>
+                  </td>
                   <td>{episode.members}</td>
                   <td style={{width:100}} >{episode.publishedAt}</td>
                   <td>{episode.durationString}</td>
@@ -111,7 +117,6 @@ export const getStaticProps: GetStaticProps = async () => {
       members:  episode.members,
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', {locale: ptBR}),
       thumbnail: episode.thumbnail ,
-      description: episode.description,
       url: episode.file.url,
       type: episode.file.type,
       duration: Number(episode.file.duration),
