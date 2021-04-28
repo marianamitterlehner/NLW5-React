@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
 
 export default MyApp
 
+/** ANNOTATION */
 /** wrapper  Uma wrapper class é uma classe que "embrulha", envolve, 
  * outros objetos afim de adicionar algum atributo ao conjunto ou melhor 
  * organizar seu código. */

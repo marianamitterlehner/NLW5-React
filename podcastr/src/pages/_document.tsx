@@ -18,5 +18,5 @@ export default class MyDocument extends Document {
     )
   }
 }
-
+/** ANNOTATION */
 /**quando quero estilizar por volta do meu html. Entretanto e executado apenas uma vez */
