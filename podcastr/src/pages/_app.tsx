@@ -3,41 +3,20 @@ import styles from '../styles/app.module.scss';
 
 import Header from '../components/Header'
 import Player from '../components/Player';
-import { PlayerContext } from '../contexts/PlayerContext';
-import { useState } from 'react';
-
+import { PlayerContext, PlayerContextProvider } from '../contexts/PlayerContext';
 
 function MyApp({ Component, pageProps }) {
 
-  //useState de toda aplicacao
-  const [episodeList, setEpisodeList] = useState([]);
-  const [currentEpisode, setCurrentEpisode] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  function play(episode){
-    setEpisodeList([episode]);
-    setCurrentEpisode(0);
-    setIsPlaying(true);
-  }
-
-  function toggleIsPlaying(){
-    setIsPlaying(!isPlaying);
-  }
-
-  function playingState(state: boolean){
-    setIsPlaying(state);
-  }
-
   return (
-    <PlayerContext.Provider value={{ episodeList, currentEpisode, isPlaying, play, toggleIsPlaying, playingState }}> 
-      <div className={styles.appWrapper}> 
-        <main>
-          <Header />
-          <Component {...pageProps} />
-        </main>
-        <Player />
-      </div>
-    </PlayerContext.Provider>
+    <PlayerContextProvider>
+        <div className={styles.appWrapper}> 
+          <main>
+            <Header />
+            <Component {...pageProps} />
+          </main>
+          <Player />
+        </div>
+      </PlayerContextProvider>
   ); 
 }
 
