@@ -13,7 +13,8 @@ type PlayContext = {
   episodeList: Array<Episode>;
   currentEpisode: number;
   isPlaying: boolean; //para saber se o ep ta tocando
-  play: (episode: Episode) => void; //tipagem de uma funcao
+  playList: (list: Episode[], index: number) => void;
+  play: (episode:Episode) => void; //tipagem de uma funcao
   toggleIsPlaying: () => void; 
   playingState: (state: boolean) => void; // retorna o estado  
 }
@@ -32,8 +33,14 @@ export function PlayerContextProvider({children}:PlayerContextProviderProps){
   const [isPlaying, setIsPlaying] = useState(false);
 
   function play(episode: Episode){
-    setEpisodeList([episode]);
-    setCurrentEpisode(0);
+    setEpisodeList([episode]); //pega um unico episodio dentro do array
+    setCurrentEpisode(0); // index zerado
+    setIsPlaying(true);
+  }
+
+  function playList(list: Episode[], index: number){
+    setEpisodeList(list); //array de episodios 
+    setCurrentEpisode(index); // index dos episodios
     setIsPlaying(true);
   }
 
@@ -47,7 +54,8 @@ export function PlayerContextProvider({children}:PlayerContextProviderProps){
   /**retorna a funcao pode ser aplicada em volta do app */
   return(
     <PlayerContext.Provider value={{ episodeList, currentEpisode, isPlaying, 
-                                      play, toggleIsPlaying, playingState }}>
+                                      play, toggleIsPlaying, playingState, playList 
+                                      }}>
       {children}
     </PlayerContext.Provider>
   )
