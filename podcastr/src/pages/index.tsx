@@ -1,5 +1,6 @@
 import {GetStaticProps} from 'next';
 import {format, parseISO} from 'date-fns';
+import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -7,8 +8,8 @@ import { api } from '../services/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 
 import styles from './home.module.scss';
-import { useContext } from 'react';
-import { PlayerContext } from '../contexts/PlayerContext';
+import { usePlay } from '../contexts/PlayerContext';
+import React from 'react';
 
 /**Tipagem */
 type Episode = {
@@ -32,12 +33,13 @@ type HomeProps = {
 /**Funcao HTML */
 export default function Home({latestEpisodes, allEpisodes}: HomeProps) {
   //usar o contexto criado e puxado pelo onclick do button
-  const {playList} = useContext(PlayerContext);
+  const {playList} = usePlay();
 
   const episodeList = [...latestEpisodes, ...allEpisodes];
 
   return (
     <div className={styles.homePage}>
+      <Head> <title> Home | Podcastr </title> </Head>
       <section className={styles.latestEpisodes}> 
         <h2> Ultimos Lancamentos </h2>
         <ul>

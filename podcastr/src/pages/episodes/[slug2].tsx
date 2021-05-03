@@ -11,6 +11,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import styles from './episode.module.scss';
+import { usePlay } from '../../contexts/PlayerContext';
+import React from 'react';
+import Head from 'next/head';
 
 /** Tipagem */
 type Episode = {
@@ -31,8 +34,12 @@ type EpisodeProps = {
 
 /**HTML da pagina  */
 export default function Episode({episode}:EpisodeProps) {
+
+  const {play} = usePlay();
+
   return(
     <div className={styles.episode}>
+      <Head> <title> {episode.title} | Podcastr </title> </Head>
       <div className={styles.thumbnailContainer}>
         <Link href={`/`}>
           <button type="button">
@@ -41,7 +48,7 @@ export default function Episode({episode}:EpisodeProps) {
         </Link>
         <Image width={700} height={160} src={episode.thumbnail} alt={episode.title} objectFit="cover" />
         <button type="button">
-          <img src="/play.svg" alt="tocar episode" />
+          <img src="/play.svg" alt="tocar episode" onClick={() => play(episode)} />
         </button>
       </div>
       <header>
